@@ -1,0 +1,35 @@
+@use "../utils/" as *;
+
+.visually-hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.container {
+  width: min(90%, rem(1200));
+  margin-inline: auto;
+  outline: 1px solid limegreen;
+}
+
+a {
+  text-decoration: none;
+  // display: inline-block;
+}
+
+.blue-btn {
+  display: inline-block;
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(var(--Primary-100));
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5em 2em;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
