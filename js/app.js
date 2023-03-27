@@ -24,13 +24,12 @@ function submitForm(e) {
   //   return;
   // }
 
-  if (validation(inputVal)) {
+  if (validation(inputVal) || shortenLink(inputVal)) {
     return;
   }
-
   shortenLink(inputVal);
 
-  inputVal = "";
+  inputLink.value = "";
 }
 
 function displayLink() {
@@ -50,7 +49,7 @@ function validation(inputVal) {
   if (inputVal.trim() == "") {
     error = 1;
     invalidText.classList.add("invalid-text");
-    invalidText.textContent = "please add link...";
+    // invalidText.textContent = "please add link...";
     inputLink.classList.add("invalid");
     setTimeout(() => {
       inputLink.classList.remove("invalid");
@@ -88,11 +87,12 @@ async function shortenLink(inputVal) {
       urlStorage.push(storageData);
       localStorage.setItem("urlstorage", JSON.stringify(urlStorage));
       invalidText.classList.remove("invalid-text");
+
       displayLink();
     }
   } catch (error) {
     invalidText.classList.add("invalid-text");
-    invalidText.textContent = "please a valid url...";
+    invalidText.textContent = "please enter a valid url...";
     inputLink.classList.add("invalid");
     setTimeout(() => {
       inputLink.classList.remove("invalid");
@@ -164,6 +164,7 @@ function copyLink() {
   linkItem.forEach((link) => {
     link.onclick = function (e) {
       const target = e.target;
+      const btnCopy = target.matches("[data-copy-link-btn]");
       const getCode = this.dataset.linkCode;
 
       urlStorage.forEach((item) => {
@@ -175,8 +176,10 @@ function copyLink() {
             button.textContent = "copy";
           });
 
-          target.textContent = "copied!";
-          target.dataset.copyLinkBtn = true;
+          if (btnCopy) {
+            target.textContent = "copied!";
+            target.dataset.copyLinkBtn = true;
+          }
         }
         // console.log(urlStorage);
       });
